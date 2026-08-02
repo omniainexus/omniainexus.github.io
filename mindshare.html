@@ -1036,8 +1036,11 @@
     {
       title: "Bot vs. Workflow: What Actually Happens Under the Hood When an LLM Goes to Production?",
       description: "A closer look at the difference between a simple chatbot and a real production workflow — and what it actually takes to run an LLM reliably at scale.",
-      date: "Apr 2025",
-      url: "https://www.linkedin.com/pulse/your-data-ready-ai-omniainexus-ekqkc/?trackingId=EsDnTafsH5aREKdHQ1%2BRGw%3D%3D"
+      date: "Aug 2026",
+      url: "mindshare3.html",
+      source: null,
+      cta: "Continue to read",
+      external: false
     },
 
     /* ── PASTE YOUR NEXT ARTICLE BELOW THIS LINE ──
@@ -1059,20 +1062,25 @@
       empty.style.display = 'block';
       return;
     }
-    grid.innerHTML = ARTICLES.map(a => `
-      <a class="insight-card" href="${a.url}" target="_blank" rel="noopener noreferrer">
+    grid.innerHTML = ARTICLES.map(a => {
+      const isExternal = a.external !== false;
+      const source = a.source === undefined ? 'LinkedIn' : a.source;
+      const ctaText = a.cta || 'Read on LinkedIn';
+      const linkAttrs = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+      return `
+      <a class="insight-card" href="${a.url}" ${linkAttrs}>
         <div class="insight-meta">
           <span>OmniAINexus</span>
           <span class="insight-meta-dot"></span>
           <span>${a.date}</span>
-          <span class="insight-meta-dot"></span>
-          <span>LinkedIn</span>
+          ${source ? `<span class="insight-meta-dot"></span><span>${source}</span>` : ''}
         </div>
         <div class="insight-title">${a.title}</div>
         <div class="insight-desc">${a.description}</div>
-        <span class="insight-cta">Read on LinkedIn</span>
+        <span class="insight-cta">${ctaText}</span>
       </a>
-    `).join('');
+    `;
+    }).join('');
   })();
 
   const observer = new IntersectionObserver((entries) => {
